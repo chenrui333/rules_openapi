@@ -37,6 +37,9 @@ open_api(name, spec, api_package, model_package, invoker_package)
 
 Generates `.srcjar` containing generated source files from a given openapi specification
 
+These rules rely on [swagger-codegen](https://github.com/swagger-api/swagger-codegen#swagger-code-generator) which defines many [configuration options](https://github.com/swagger-api/swagger-codegen#to-generate-a-sample-client-library). Not all configuration options
+are implemented in these rules yet but contributions are welcome. You can also request features [here](https://github.com/meetup/rules_openapi/issues/new?title=I%20would%20like%20to%20see...)
+
 <table class="table table-condensed table-bordered table-params">
   <colgroup>
     <col class="col-param" />
