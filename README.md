@@ -1,4 +1,4 @@
-# bazel open rules
+# bazel open rules [![Build Status](https://travis-ci.org/meetup/rules_openapi.svg?branch=master)](https://travis-ci.org/meetup/rules_openapi)
 
 > [Bazel](https://bazel.build/) rules for generating sources and libraries from [openapi](https://www.openapis.org/) schemas
 
