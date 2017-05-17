@@ -72,7 +72,7 @@ are implemented in these rules yet but contributions are welcome. You can also r
       <td>
         <code>String, required</code>
         <p>Name of language to generate.</p>
-        <p>If you wish to use a custom language, you'll need to create a jar containing your <a href="https://github.com/swagger-api/swagger-codegen#making-your-own-codegen-modules">custom codegen module</a> use <code>deps</code> add the custom codegen module to the classpath.</p>
+        <p>If you wish to use a custom language, you'll need to create a jar containing your <a href="https://github.com/swagger-api/swagger-codegen#making-your-own-codegen-modules">custom codegen module</a>, then use <code>deps</code> to add the custom codegen module to the classpath.</p>
         <p>
           Note, not all swagger codegen provided langugages generate the exact same source given the exact same set of arguments.
           Be aware of this in cases where you expect bazel not to perform a previous executed action for the same sources.
