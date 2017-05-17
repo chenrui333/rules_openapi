@@ -11,7 +11,7 @@
 To use the Openapi rules, add the following to your projects `WORKSPACE` file
 
 ```python
-rules_openapi_version="xxx" # update this as needed
+rules_openapi_version="c449fd6d1ac8b3dffb8bae3bca7305167b800267" # update this as needed
 
 git_repository(
     name = "io_bazel_rules_openapi",
