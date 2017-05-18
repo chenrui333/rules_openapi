@@ -103,4 +103,29 @@ are implemented in these rules yet but contributions are welcome. You can also r
   </tbody>
 </table>
 
+An example of what a custom language may look like
+
+```python
+java_import(
+  name = "custom-codegen",
+  jars = ["custom-codegen.jar"]
+)
+
+openapi_gen(
+  name = "petstore-client-src",
+  language = "petstore-spec.json",
+  api_package = "com.example.api",
+  model_package = "com.example.model",
+  invoker_package = "com.example",
+  deps = [
+    ":custom-codegen"
+  ]
+)
+
+scala_library(
+   name = "petstore-client",
+   srcs = [":petstore-client-src"]
+)
+```
+
 Meetup 2017
