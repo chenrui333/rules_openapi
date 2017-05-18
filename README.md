@@ -107,18 +107,19 @@ An example of what a custom language may look like
 
 ```python
 java_import(
-  name = "custom-codegen",
-  jars = ["custom-codegen.jar"]
+  name = "custom-scala-codegen",
+  jars = ["custom-scala-codegen.jar"]
 )
 
 openapi_gen(
   name = "petstore-client-src",
-  language = "petstore-spec.json",
+  language = "custom-scala",
+  spec = "petstore-spec.json",
   api_package = "com.example.api",
   model_package = "com.example.model",
   invoker_package = "com.example",
   deps = [
-    ":custom-codegen"
+    ":custom-scala-codegen"
   ]
 )
 
