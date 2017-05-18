@@ -32,7 +32,7 @@ load("@io_bazel_rules_openapi//openapi:openapi.bzl", "openapi_gen")
 ## openapi_gen
 
 ```python
-open_api(name, spec, api_package, model_package, invoker_package)
+openapi_gen(name, spec, api_package, model_package, invoker_package)
 ```
 
 Generates `.srcjar` containing generated source files from a given openapi specification
