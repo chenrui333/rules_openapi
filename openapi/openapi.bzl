@@ -80,8 +80,8 @@ def _impl(ctx):
 # taken from rules_scala
 def _collect_jars(targets):
     """Compute the runtime and compile-time dependencies from the given targets"""  # noqa
-    compile_jars = set()
-    runtime_jars = set()
+    compile_jars = depset()
+    runtime_jars = depset()
     for target in targets:
         found = False
         if hasattr(target, "scala"):
