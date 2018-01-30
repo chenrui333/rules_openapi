@@ -141,7 +141,7 @@ openapi_gen = rule(
         ),
     },
     outputs = {
-        "codegen": "%{name}_codegen.srcjar",
+        "codegen": "%{name}_codegen.src.jar", # IntelliJ does not understand .srcjar
     },
     implementation = _impl,
 )
