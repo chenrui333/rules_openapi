@@ -1,10 +1,10 @@
 _specs_filetype = FileType([".json", ".yaml"])
 
-def openapi_repositories():
+def openapi_repositories(swagger_codegen_cli_version="2.2.2", swagger_codegen_cli_sha1="a5b48219c1f9898b0a1f639e0cb89396d5f8e0d1"):
     native.maven_jar(
         name = "io_bazel_rules_openapi_io_swagger_swagger_codegen_cli",
-        artifact = "io.swagger:swagger-codegen-cli:2.2.2",
-        sha1 = "a5b48219c1f9898b0a1f639e0cb89396d5f8e0d1",
+        artifact = "io.swagger:swagger-codegen-cli:" + swagger_codegen_cli_version,
+        sha1 = swagger_codegen_cli_sha1,
     )
     native.bind(
         name = 'io_bazel_rules_openapi/dependency/openapi-cli',
