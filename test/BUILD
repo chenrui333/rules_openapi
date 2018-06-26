@@ -30,3 +30,12 @@ openapi_gen(
         "modelTests": "false",
     },
 )
+
+openapi_gen(
+    name = "petstore_java_bigdecimal",
+    language = "java",
+    spec = "petstore.yaml",
+    type_mappings = {
+        "Integer": "java.math.BigDecimal",
+    },
+)

@@ -11,9 +11,9 @@ def openapi_repositories(swagger_codegen_cli_version="2.2.2", swagger_codegen_cl
         actual = '@io_bazel_rules_openapi_io_swagger_swagger_codegen_cli//jar',
     )
 
-def _comma_separated_properties(properties):
+def _comma_separated_pairs(pairs):
     return ",".join([
-        "{}={}".format(k, v) for k, v in properties.items()
+        "{}={}".format(k, v) for k, v in pairs.items()
     ])
 
 def _new_generator_command(ctx, gen_dir, rjars):
@@ -29,7 +29,7 @@ def _new_generator_command(ctx, gen_dir, rjars):
   )
 
   gen_cmd += ' -D "{properties}"'.format(
-      properties=_comma_separated_properties(ctx.attr.system_properties),
+      properties=_comma_separated_pairs(ctx.attr.system_properties),
   )
 
   additional_properties = dict(ctx.attr.additional_properties)
@@ -40,7 +40,11 @@ def _new_generator_command(ctx, gen_dir, rjars):
       additional_properties["hideGenerationTimestamp"] = "true"
 
   gen_cmd += ' --additional-properties "{properties}"'.format(
-      properties=_comma_separated_properties(additional_properties),
+      properties=_comma_separated_pairs(additional_properties),
+  )
+
+  gen_cmd += ' --type-mappings "{mappings}"'.format(
+      mappings=_comma_separated_pairs(ctx.attr.type_mappings),
   )
 
   if ctx.attr.api_package:
@@ -144,6 +148,7 @@ openapi_gen = rule(
         "model_package": attr.string(),
         "additional_properties": attr.string_dict(),
         "system_properties": attr.string_dict(),
+        "type_mappings": attr.string_dict(),
         "_java": attr.label(
             executable = True,
             cfg = "host",

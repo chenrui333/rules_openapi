@@ -128,6 +128,23 @@ are implemented in these rules yet but contributions are welcome. You can also r
     },</pre>
       </td>
     </tr>
+    <tr>
+      <td><code>type_mappings</code></td>
+      <td>
+        <code>Dict of strings, optional</code>
+        <p>Allows control of the types used in generated code with
+        swagger-codegen's <code>--type-mappings</code> parameter. For example to
+        use Java 8's LocalDateTime class:</p>
+        <pre>
+    language = "java",
+    additional_properties = {
+        "dateLibrary": "java8",
+    },
+    type_mappings = {
+        "OffsetDateTime": "java.time.LocalDateTime",
+    },</pre>
+      </td>
+    </tr>
   </tbody>
 </table>
 
