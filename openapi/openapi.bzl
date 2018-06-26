@@ -11,15 +11,36 @@ def openapi_repositories(swagger_codegen_cli_version="2.2.2", swagger_codegen_cl
         actual = '@io_bazel_rules_openapi_io_swagger_swagger_codegen_cli//jar',
     )
 
+def _comma_separated_properties(properties):
+    return ",".join([
+        "{}={}".format(k, v) for k, v in properties.items()
+    ])
+
 def _new_generator_command(ctx, gen_dir, rjars):
-  gen_cmd = """
-  {java} -cp {cli_jar}:{jars} io.swagger.codegen.SwaggerCodegen generate -i {spec} -l {language} -o {output}""".format(
+  gen_cmd = ctx.executable._java.path
+
+  gen_cmd += " -cp {cli_jar}:{jars} io.swagger.codegen.SwaggerCodegen generate -i {spec} -l {language} -o {output}".format(
       java = ctx.executable._java.path,
       cli_jar = ctx.file._codegen_cli.path,
       jars = ":".join([j.path for j in rjars]),
       spec = ctx.file.spec.path,
       language = ctx.attr.language,
       output = gen_dir,
+  )
+
+  gen_cmd += ' -D "{properties}"'.format(
+      properties=_comma_separated_properties(ctx.attr.system_properties),
+  )
+
+  additional_properties = dict(ctx.attr.additional_properties)
+
+  # This is needed to ensure reproducible Java output
+  if ctx.attr.language == "java" and \
+      "hideGenerationTimestamp" not in ctx.attr.additional_properties:
+      additional_properties["hideGenerationTimestamp"] = "true"
+
+  gen_cmd += ' --additional-properties "{properties}"'.format(
+      properties=_comma_separated_properties(additional_properties),
   )
 
   if ctx.attr.api_package:
@@ -121,6 +142,8 @@ openapi_gen = rule(
         "api_package": attr.string(),
         "invoker_package": attr.string(),
         "model_package": attr.string(),
+        "additional_properties": attr.string_dict(),
+        "system_properties": attr.string_dict(),
         "_java": attr.label(
             executable = True,
             cfg = "host",

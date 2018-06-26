@@ -74,7 +74,7 @@ are implemented in these rules yet but contributions are welcome. You can also r
         <p>Name of language to generate.</p>
         <p>If you wish to use a custom language, you'll need to create a jar containing your <a href="https://github.com/swagger-api/swagger-codegen#making-your-own-codegen-modules">custom codegen module</a>, then use <code>deps</code> to add the custom codegen module to the classpath.</p>
         <p>
-          Note, not all swagger codegen provided langugages generate the exact same source given the exact same set of arguments.
+          Note, not all swagger codegen provided languages generate the exact same source given the exact same set of arguments.
           Be aware of this in cases where you expect bazel not to perform a previous executed action for the same sources.
         </p>
       </td>
@@ -98,6 +98,34 @@ are implemented in these rules yet but contributions are welcome. You can also r
       <td>
         <code>String, optional</code>
         <p>package for invoker.</p>
+      </td>
+    </tr>
+    <tr>
+      <td><code>additional_properties</code></td>
+      <td>
+        <code>Dict of strings, optional</code>
+        <p>Additional properties that can be referenced by the codegen
+        templates. This allows setting parameters that you'd normally put in
+        <code>config.json</code>, for example the Java library template:</p>
+        <pre>
+    language = "java",
+    additional_properties = {
+        "library": "feign",
+    },</pre>
+      </td>
+    </tr>
+    <tr>
+      <td><code>system_properties</code></td>
+      <td>
+        <code>Dict of strings, optional</code>
+        <p>System properties to pass to swagger-codegen.  This allows setting parameters that you'd normally
+        set with <code>-D</code>, for example to disable test generation:</p>
+        <pre>
+    language = "java",
+    system_properties = {
+        "apiTests": "false",
+        "modelTests": "false",
+    },</pre>
       </td>
     </tr>
   </tbody>
