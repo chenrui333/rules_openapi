@@ -11,12 +11,7 @@ os:
   - osx
 
 env:
-  - V=HEAD
-  - V=0.4.5
-
-matrix:
- allow_failures:
-   - env: V=HEAD
+  - V=0.17.2
 
 before_install:
   - |
