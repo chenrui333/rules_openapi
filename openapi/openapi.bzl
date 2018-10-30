@@ -17,10 +17,11 @@ def _comma_separated_pairs(pairs):
     ])
 
 def _new_generator_command(ctx, gen_dir, rjars):
-  gen_cmd = ctx.executable._java.path
+  java_path = ctx.attr._jdk[java_common.JavaRuntimeInfo].java_executable_exec_path
+  gen_cmd = str(java_path)
 
   gen_cmd += " -cp {cli_jar}:{jars} io.swagger.codegen.SwaggerCodegen generate -i {spec} -l {language} -o {output}".format(
-      java = ctx.executable._java.path,
+      java = java_path,
       cli_jar = ctx.file._codegen_cli.path,
       jars = ":".join([j.path for j in rjars]),
       spec = ctx.file.spec.path,
@@ -80,14 +81,13 @@ def _impl(ctx):
          gen_dir=gen_dir
       ),
       "{jar} cMf {target} -C {srcs} .".format(
-          jar=ctx.file._jar.path,
+          jar="%s/bin/jar" % ctx.attr._jdk[java_common.JavaRuntimeInfo].java_home,
           target=ctx.outputs.codegen.path,
           srcs=gen_dir
       )
     ]
 
     inputs = ctx.files._jdk + [
-        ctx.executable._java,
         ctx.file._codegen_cli,
         ctx.file.spec
     ] + list(cjars) + list(rjars)
@@ -149,18 +149,9 @@ openapi_gen = rule(
         "additional_properties": attr.string_dict(),
         "system_properties": attr.string_dict(),
         "type_mappings": attr.string_dict(),
-        "_java": attr.label(
-            executable = True,
-            cfg = "host",
-            default = Label("@bazel_tools//tools/jdk:java"),
-            single_file = True,
-            allow_files = True,
-        ),
-        "_jdk": attr.label(default=Label("//tools/defaults:jdk"), allow_files=True),
-        "_jar": attr.label(
-            default=Label("@bazel_tools//tools/jdk:jar"),
-            allow_files=True,
-            single_file=True
+        "_jdk": attr.label(
+            default=Label("@bazel_tools//tools/jdk:current_java_runtime"),
+            providers = [java_common.JavaRuntimeInfo]
         ),
         "_codegen_cli": attr.label(
             cfg = "host",
