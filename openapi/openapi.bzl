@@ -68,9 +68,11 @@ def _new_generator_command(ctx, gen_dir, rjars):
 def _impl(ctx):
     jars = _collect_jars(ctx.attr.deps)
     (cjars, rjars) = (jars.compiletime, jars.runtime)
-    gen_dir = "{out}-tmp".format(
-        out=ctx.outputs.codegen.path
+    gen_dir = "{dirname}/{rule_name}".format(
+        dirname=ctx.file.spec.dirname,
+        rule_name=ctx.attr.name
     )
+    
     commands = [
       "mkdir -p {gen_dir}".format(
         gen_dir=gen_dir
@@ -93,7 +95,7 @@ def _impl(ctx):
     ] + list(cjars) + list(rjars)
     ctx.action(
         inputs=inputs,
-        outputs=[ctx.outputs.codegen],
+        outputs=[ctx.actions.declare_directory("%s" % (ctx.attr.name)), ctx.outputs.codegen],
         command=" && ".join(commands),
         progress_message="generating openapi sources %s" % ctx.label,
         arguments=[],
