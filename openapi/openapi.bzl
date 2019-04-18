@@ -1,5 +1,3 @@
-_specs_filetype = FileType([".json", ".yaml"])
-
 def openapi_repositories(swagger_codegen_cli_version="2.2.2", swagger_codegen_cli_sha1="a5b48219c1f9898b0a1f639e0cb89396d5f8e0d1"):
     native.maven_jar(
         name = "io_bazel_rules_openapi_io_swagger_swagger_codegen_cli",
@@ -133,7 +131,7 @@ openapi_gen = rule(
         # openapi spec file
         "spec": attr.label(
             mandatory=True,
-            allow_single_file=_specs_filetype
+            allow_single_file=[".json", ".yaml"]
         ),
         # language to generate
         "language": attr.string(mandatory=True),
