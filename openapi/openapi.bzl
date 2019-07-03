@@ -1,12 +1,12 @@
-def openapi_repositories(swagger_codegen_cli_version="2.2.2", swagger_codegen_cli_sha1="a5b48219c1f9898b0a1f639e0cb89396d5f8e0d1"):
+def openapi_repositories(swagger_codegen_cli_version="2.2.2", swagger_codegen_cli_sha1="a5b48219c1f9898b0a1f639e0cb89396d5f8e0d1", prefix="io_bazel_rules_openapi"):
     native.maven_jar(
-        name = "io_bazel_rules_openapi_io_swagger_swagger_codegen_cli",
+        name = prefix + "_io_swagger_swagger_codegen_cli",
         artifact = "io.swagger:swagger-codegen-cli:" + swagger_codegen_cli_version,
         sha1 = swagger_codegen_cli_sha1,
     )
     native.bind(
-        name = 'io_bazel_rules_openapi/dependency/openapi-cli',
-        actual = '@io_bazel_rules_openapi_io_swagger_swagger_codegen_cli//jar',
+        name = prefix + '/dependency/openapi-cli',
+        actual = '@' + prefix + '_io_swagger_swagger_codegen_cli//jar',
     )
 
 def _comma_separated_pairs(pairs):
@@ -20,7 +20,7 @@ def _new_generator_command(ctx, gen_dir, rjars):
 
   gen_cmd += " -cp {cli_jar}:{jars} io.swagger.codegen.SwaggerCodegen generate -i {spec} -l {language} -o {output}".format(
       java = java_path,
-      cli_jar = ctx.file._codegen_cli.path,
+      cli_jar = ctx.file.codegen_cli.path,
       jars = ":".join([j.path for j in rjars]),
       spec = ctx.file.spec.path,
       language = ctx.attr.language,
@@ -88,7 +88,7 @@ def _impl(ctx):
     ]
 
     inputs = ctx.files._jdk + [
-        ctx.file._codegen_cli,
+        ctx.file.codegen_cli,
         ctx.file.spec
     ] + list(cjars) + list(rjars)
     ctx.action(
@@ -153,7 +153,7 @@ openapi_gen = rule(
             default=Label("@bazel_tools//tools/jdk:current_java_runtime"),
             providers = [java_common.JavaRuntimeInfo]
         ),
-        "_codegen_cli": attr.label(
+        "codegen_cli": attr.label(
             cfg = "host",
             default = Label("//external:io_bazel_rules_openapi/dependency/openapi-cli"),
             allow_single_file = True,
