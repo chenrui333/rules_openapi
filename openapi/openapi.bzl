@@ -21,7 +21,7 @@ def _new_generator_command(ctx, gen_dir, rjars):
   gen_cmd += " -cp {cli_jar}:{jars} io.swagger.codegen.SwaggerCodegen generate -i {spec} -l {language} -o {output}".format(
       java = java_path,
       cli_jar = ctx.file.codegen_cli.path,
-      jars = ":".join([j.path for j in rjars]),
+      jars = ":".join([j.path for j in rjars.to_list()]),
       spec = ctx.file.spec.path,
       language = ctx.attr.language,
       output = gen_dir,
@@ -90,8 +90,8 @@ def _impl(ctx):
     inputs = ctx.files._jdk + [
         ctx.file.codegen_cli,
         ctx.file.spec
-    ] + list(cjars) + list(rjars)
-    ctx.action(
+    ] + cjars.to_list() + rjars.to_list()
+    ctx.actions.run_shell(
         inputs=inputs,
         outputs=[ctx.actions.declare_directory("%s" % (ctx.attr.name)), ctx.outputs.codegen],
         command=" && ".join(commands),
