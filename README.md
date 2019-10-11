@@ -1,4 +1,4 @@
-# bazel openapi rules [![Build Status](https://travis-ci.org/meetup/rules_openapi.svg?branch=master)](https://travis-ci.org/meetup/rules_openapi)
+# bazel openapi rules [![Workflow Status](https://github.com/meetup/rules_openapi/workflows/Main/badge.svg)](https://github.com/meetup/rules_openapi/actions)
 
 > [Bazel](https://bazel.build/) rules for generating sources and libraries from [openapi](https://www.openapis.org/) schemas
 
