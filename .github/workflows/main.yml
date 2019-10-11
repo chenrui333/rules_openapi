@@ -1,0 +1,33 @@
+name: Main
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest]
+          runs-on: ${{ matrix.os }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Setup Bazel
+      run: |
+          if [[ "${{ matrix.os }}" == "macOS-latest" ]]; then
+            OS=darwin
+          else
+            sysctl kernel.unprivileged_userns_clone=1
+            sudo apt-get update -q
+            sudo apt-get install libxml2-utils -y
+            OS=linux
+          fi
+          if [[ "${V}" == "HEAD" ]]; then
+            URL="http://ci.bazel.io/job/Bazel/JAVA_VERSION=1.8,PLATFORM_NAME=${OS}-x86_64/lastSuccessfulBuild/artifact/output/ci/bazel--installer.sh"
+          else
+            URL="https://github.com/bazelbuild/bazel/releases/download/${V}/bazel-${V}-installer-${OS}-x86_64.sh"
+          fi
+          wget -O install.sh "${URL}"
+          chmod +x install.sh
+          ./install.sh --user
+          rm -f install.sh
+        - cat .bazelrc.travis >> .bazelrc
+    - name: test
+      run: make test
