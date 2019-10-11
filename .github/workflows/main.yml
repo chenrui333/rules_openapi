@@ -32,4 +32,6 @@ jobs:
       env:
         V: "0.27.1"
     - name: Test
-      run: make test
+      run: |
+        export PATH=${PATH}:${HOME}/bin
+        make test
