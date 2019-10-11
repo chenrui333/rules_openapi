@@ -29,5 +29,5 @@ jobs:
           ./install.sh --user
           rm -f install.sh
         - cat .bazelrc.travis >> .bazelrc
-    - name: test
+    - name: Test
       run: make test
