@@ -1,8 +1,8 @@
-def openapi_repositories(swagger_codegen_cli_version="2.2.2", swagger_codegen_cli_sha1="a5b48219c1f9898b0a1f639e0cb89396d5f8e0d1", prefix="io_bazel_rules_openapi"):
+def openapi_repositories(swagger_codegen_cli_version="2.2.2", swagger_codegen_cli_sha256="d4e640503482a423ae97e3f487347c9e08cc0e34d90e360ed7de987cfad24299", prefix="io_bazel_rules_openapi"):
     native.maven_jar(
         name = prefix + "_io_swagger_swagger_codegen_cli",
         artifact = "io.swagger:swagger-codegen-cli:" + swagger_codegen_cli_version,
-        sha1 = swagger_codegen_cli_sha1,
+        sha256 = swagger_codegen_cli_sha256,
     )
     native.bind(
         name = prefix + '/dependency/openapi-cli',
@@ -70,7 +70,7 @@ def _impl(ctx):
         dirname=ctx.file.spec.dirname,
         rule_name=ctx.attr.name
     )
-    
+
     commands = [
       "mkdir -p {gen_dir}".format(
         gen_dir=gen_dir
