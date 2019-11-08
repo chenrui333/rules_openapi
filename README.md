@@ -8,17 +8,17 @@
 
 ## Getting started
 
-To use the Openapi rules, add the following to your projects `WORKSPACE` file
+To use the OpenAPI rules, add the following to your projects `WORKSPACE` file
 
 ```python
-rules_openapi_version="c449fd6d1ac8b3dffb8bae3bca7305167b800267" # update this as needed
-
-git_repository(
+rules_open_api_version = "bc060274349e137c0eb6ccf6f5f06de94551fe00" # update this as needed
+http_archive(
     name = "io_bazel_rules_openapi",
-    commit = rules_openapi_version,
-    remote = "git@github.com:meetup/rules_openapi.git",
+    strip_prefix = "rules_openapi-%s" % rules_open_api_version,
+    type = "zip",
+    url = "https://github.com/meetup/rules_openapi/archive/%s.zip" % rules_open_api_version,
+    sha256 = "78503f072e4ca745854c986a34b478914d5242b4c6cada81069fa15b7309570b"
 )
-
 load("@io_bazel_rules_openapi//openapi:openapi.bzl", "openapi_repositories")
 openapi_repositories()
 ```
@@ -35,7 +35,7 @@ load("@io_bazel_rules_openapi//openapi:openapi.bzl", "openapi_gen")
 openapi_gen(name, spec, api_package, model_package, invoker_package)
 ```
 
-Generates `.srcjar` containing generated source files from a given openapi specification
+This generates a `.srcjar` archive containing generated source files from a given openapi specification.
 
 These rules rely on [swagger-codegen](https://github.com/swagger-api/swagger-codegen#swagger-code-generator) which defines many [configuration options](https://github.com/swagger-api/swagger-codegen#to-generate-a-sample-client-library). Not all configuration options
 are implemented in these rules yet but contributions are welcome. You can also request features [here](https://github.com/meetup/rules_openapi/issues/new?title=I%20would%20like%20to%20see...)
