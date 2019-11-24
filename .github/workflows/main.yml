@@ -1,5 +1,8 @@
 name: Main
-on: push
+on:
+  push:
+    paths-ignore:
+      - '*.md'
 jobs:
   test:
     strategy:
