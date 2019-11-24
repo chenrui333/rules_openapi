@@ -177,5 +177,3 @@ scala_library(
    srcs = [":petstore-client-src"]
 )
 ```
-
-Meetup 2017
