@@ -1,11 +1,17 @@
 """Bazel rules for generating sources and libraries from openapi schemas
 
 """
+
+load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
+
+
 def openapi_repositories(swagger_codegen_cli_version = "2.2.2", swagger_codegen_cli_sha256 = "d4e640503482a423ae97e3f487347c9e08cc0e34d90e360ed7de987cfad24299", prefix = "io_bazel_rules_openapi"):
-    native.maven_jar(
+    jvm_maven_import_external(
         name = prefix + "_io_swagger_swagger_codegen_cli",
         artifact = "io.swagger:swagger-codegen-cli:" + swagger_codegen_cli_version,
-        sha256 = swagger_codegen_cli_sha256,
+        artifact_sha256 = swagger_codegen_cli_sha256,
+        server_urls = ["http://central.maven.org/maven2"],
+        licenses = ["notice"],  # Apache 2.0 License
     )
     native.bind(
         name = prefix + "/dependency/openapi-cli",
