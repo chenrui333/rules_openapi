@@ -4,8 +4,8 @@
 
 load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
 
-
-def openapi_repositories(swagger_codegen_cli_version = "2.2.2", swagger_codegen_cli_sha256 = "d4e640503482a423ae97e3f487347c9e08cc0e34d90e360ed7de987cfad24299", prefix = "io_bazel_rules_openapi"):
+# https://swagger.io/docs/open-source-tools/swagger-codegen/
+def openapi_repositories(swagger_codegen_cli_version = "2.4.9", swagger_codegen_cli_sha256 = "8555854798505f6ff924b55a95a7cc23d35b49aa9a62e8463b77da94b89b50b9", prefix = "io_bazel_rules_openapi"):
     jvm_maven_import_external(
         name = prefix + "_io_swagger_swagger_codegen_cli",
         artifact = "io.swagger:swagger-codegen-cli:" + swagger_codegen_cli_version,
