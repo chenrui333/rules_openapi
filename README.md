@@ -1,6 +1,12 @@
-# bazel openapi rules [![Workflow Status](https://github.com/meetup/rules_openapi/workflows/Main/badge.svg)](https://github.com/meetup/rules_openapi/actions)
+# OpenAPI rules for Bazel <!-- omit in toc -->
 
-> [Bazel](https://bazel.build/) rules for generating sources and libraries from [openapi](https://www.openapis.org/) schemas
+[![Workflow Status](https://github.com/meetup/rules_openapi/workflows/Main/badge.svg)](https://github.com/meetup/rules_openapi/actions)
+
+> [Bazel](https://bazel.build/) rules for generating sources and libraries from [openapi](https://www.openapis.org/) schemas.
+
+- [Rules](#rules)
+- [Getting started](#getting-started)
+- [openapi_gen](#openapigen)
 
 ## Rules
 
@@ -173,7 +179,7 @@ openapi_gen(
 )
 
 scala_library(
-   name = "petstore-client",
-   srcs = [":petstore-client-src"]
+  name = "petstore-client",
+  srcs = [":petstore-client-src"]
 )
 ```
