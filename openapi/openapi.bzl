@@ -10,7 +10,7 @@ def openapi_repositories(swagger_codegen_cli_version = "2.4.9", swagger_codegen_
         name = prefix + "_io_swagger_swagger_codegen_cli",
         artifact = "io.swagger:swagger-codegen-cli:" + swagger_codegen_cli_version,
         artifact_sha256 = swagger_codegen_cli_sha256,
-        server_urls = ["http://central.maven.org/maven2"],
+        server_urls = ["https://repo.maven.apache.org/maven2"],
         licenses = ["notice"],  # Apache 2.0 License
     )
     native.bind(
