@@ -1,8 +1,10 @@
 name: Main
+
 on:
   push:
     paths-ignore:
       - '*.md'
+
 jobs:
   test:
     strategy:
@@ -10,8 +12,7 @@ jobs:
         os: [ubuntu-latest, macOS-latest]
     runs-on: ${{ matrix.os }}
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Setup Bazel
       run: |
           if [[ "${{ matrix.os }}" == "macOS-latest" ]]; then
@@ -33,7 +34,7 @@ jobs:
           rm -f install.sh
           cat .bazelrc.travis >> .bazelrc
       env:
-        V: "2.1.0"
+        V: "2.1.1"
     - name: Test
       run: |
         export PATH=${PATH}:${HOME}/bin
