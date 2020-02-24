@@ -1,9 +1,10 @@
 name: Main
+
 on:
   push:
-    paths:
-      # ignore markdown files
-      - '!*.md'
+    paths-ignore:
+      - '*.md'
+
 jobs:
   test:
     strategy:
