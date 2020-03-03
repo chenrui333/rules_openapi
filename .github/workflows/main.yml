@@ -34,7 +34,7 @@ jobs:
           rm -f install.sh
           cat .bazelrc.travis >> .bazelrc
       env:
-        V: "2.1.1"
+        V: "2.2.0"
     - name: Test
       run: |
         export PATH=${PATH}:${HOME}/bin
