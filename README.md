@@ -6,7 +6,8 @@
 
 - [Rules](#rules)
 - [Getting started](#getting-started)
-- [openapi_gen](#openapigen)
+- [Bazel compatibility matrix](#bazel-compatibility-matrix)
+- [openapi_gen](#openapi_gen)
 
 ## Rules
 
@@ -38,6 +39,17 @@ Then in your `BUILD` file, just add the following so the rules will be available
 ```python
 load("@io_bazel_rules_openapi//openapi:openapi.bzl", "openapi_gen")
 ```
+
+## Bazel compatibility matrix
+
+| Bazel version | rules_openapi commit                     | sha256 hash                                                      |
+| ------------- | ---------------------------------------- | ---------------------------------------------------------------- |
+| 1.2.1         | 32527fd4f9b4a50199b3905d34027b1eaf61b88a | 700feae8dda1a6400672c77e0b2bc2d5db9a21b902c20b342d65bb314af953f3 |
+| 2.0.0         | c6e77e314df7ced9652bc68f3ee32d5425160716 | ba55fbd75a50eb8e2fd08d4dc72a8f32858bc14db184677cee969453d72d7c67 |
+| 2.1.0         | c289e0b4e127924e2a18bc8f345b6cf1945735de | f88a6627533d2974385b36ce1f3606795cd08070e28e5e44074ed2101afdd348 |
+| 2.1.1         | 4e35a7b968908213e3c6eedc4435d140dbb577b3 | d1af6e9bd23b24a07f059b1a97f0bc305d7cf74a2965f06fc11c182d568a0e1c |
+| 2.2.0         | 08e2472385e8929a21bf8cd747f26e3b933dbd2f | 9dfeeb8cef2347b5ba3d59b7948fd26518eefc537ca95d4846d6c124e38d294a |
+| 3.0.0         | 2528ecbfe628211de87e1924908350014fb0d03e | d4c5b924f0a2a7d844650ff3b76c0475f370e5ceb5b1811665144102e7296383 |
 
 ## openapi_gen
 
