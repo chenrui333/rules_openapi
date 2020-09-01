@@ -148,16 +148,6 @@ def _impl(ctx):
         codegen = ctx.outputs.codegen,
     )
 
-def _parse_verion(version):
-    """Parse the version string in a 3-tuple of ints
-    """
-    return tuple([int(n) for n in version.split(".")])
-
-def _is_at_least(threshold, version):
-    """Check that a version is higher or equals to a given version(threshold)
-    """
-    return _parse_verion(version) >= _parse_verion(threshold)
-
 # taken from rules_scala
 def _collect_jars(targets):
     """Compute the runtime and compile-time dependencies from the given targets"""  # noqa
