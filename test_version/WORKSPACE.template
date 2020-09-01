@@ -1,0 +1,21 @@
+workspace(name = "openapi_test")
+
+local_repository(
+    name = "io_bazel_rules_openapi",
+    path = "../..",
+)
+
+
+load("@io_bazel_rules_openapi//openapi:openapi.bzl", "openapi_repositories")
+
+
+codegen_cli_version = "${codegen_cli_version}"
+codegen_cli_sha256 = "${codegen_cli_sha256}"
+codegen_cli_provider = "${codegen_cli_provider}"
+
+openapi_repositories(
+    codegen_cli_version = codegen_cli_version,
+    codegen_cli_sha256 = codegen_cli_sha256,
+    codegen_cli_provider = codegen_cli_provider,
+)
+
