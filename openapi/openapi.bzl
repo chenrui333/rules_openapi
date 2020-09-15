@@ -41,7 +41,7 @@ def _comma_separated_pairs(pairs):
 def _generator_provider(ctx):
     codegen_provider = "openapi"
     if "io_swagger_swagger_codegen_cli" in ctx.file.codegen_cli.path:
-        codegen_provider = "swagger" 
+        codegen_provider = "swagger"
     return codegen_provider
 
 def _is_swagger_codegen(ctx):
@@ -53,9 +53,15 @@ def _is_openapi_codegen(ctx):
 def _new_generator_command(ctx, gen_dir, rjars):
     java_path = ctx.attr._jdk[java_common.JavaRuntimeInfo].java_executable_exec_path
     gen_cmd = str(java_path)
-    gen_cmd += " -cp {cli_jar}:{jars}".format(
-        cli_jar = ctx.file.codegen_cli.path,
-        jars = ":".join([j.path for j in rjars.to_list()]),
+
+    jar_delimiter = ":"
+    if ctx.attr.is_windows:
+        jar_delimiter = ";"
+
+    jars = [ctx.file.codegen_cli] + rjars.to_list()
+
+    gen_cmd += " -cp \"{jars}\"".format(
+        jars = jar_delimiter.join([j.path for j in jars]),
     )
 
     if _is_swagger_codegen(ctx):
@@ -64,7 +70,7 @@ def _new_generator_command(ctx, gen_dir, rjars):
             language = ctx.attr.language,
             output = gen_dir,
         )
-    
+
     if _is_openapi_codegen(ctx):
         gen_cmd += " org.openapitools.codegen.OpenAPIGenerator generate -i {spec} -g {language} -o {output}".format(
             spec = ctx.file.spec.path,
@@ -117,6 +123,10 @@ def _impl(ctx):
         rule_name = ctx.attr.name,
     )
 
+    jar_cmd = "%s/bin/jar" % ctx.attr._jdk[java_common.JavaRuntimeInfo].java_home
+    if ctx.attr.is_windows:
+        jar_cmd += ".exe"
+
     commands = [
         "mkdir -p {gen_dir}".format(
             gen_dir = gen_dir,
@@ -126,8 +136,8 @@ def _impl(ctx):
         "find {gen_dir} -exec touch -t 198001010000 {{}} \;".format(
             gen_dir = gen_dir,
         ),
-        "{jar} cMf {target} -C {srcs} .".format(
-            jar = "%s/bin/jar" % ctx.attr._jdk[java_common.JavaRuntimeInfo].java_home,
+        "{jar_cmd} cMf {target} -C {srcs} .".format(
+            jar_cmd = jar_cmd,
             target = ctx.outputs.codegen.path,
             srcs = gen_dir,
         ),
@@ -178,7 +188,7 @@ def _collect_jars(targets):
 
     return struct(compiletime = compile_jars, runtime = runtime_jars)
 
-openapi_gen = rule(
+_openapi_gen = rule(
     attrs = {
         # downstream dependencies
         "deps": attr.label_list(),
@@ -196,6 +206,7 @@ openapi_gen = rule(
         "system_properties": attr.string_dict(),
         "type_mappings": attr.string_dict(),
         "import_mappings": attr.string(),
+        "is_windows": attr.bool(mandatory = True),
         "_jdk": attr.label(
             default = Label("@bazel_tools//tools/jdk:current_java_runtime"),
             providers = [java_common.JavaRuntimeInfo],
@@ -211,3 +222,13 @@ openapi_gen = rule(
     },
     implementation = _impl,
 )
+
+def openapi_gen(name, **kwargs):
+    _openapi_gen(
+        name = name,
+        is_windows = select({
+            "@bazel_tools//src/conditions:windows": True,
+            "//conditions:default": False,
+        }),
+        **kwargs
+    )
