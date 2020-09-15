@@ -112,24 +112,22 @@ def _new_generator_command(ctx, gen_dir, rjars):
 def _impl(ctx):
     jars = _collect_jars(ctx.attr.deps)
     (cjars, rjars) = (jars.compiletime, jars.runtime)
-    gen_dir = "{dirname}/{rule_name}".format(
-        dirname = ctx.file.spec.dirname,
-        rule_name = ctx.attr.name,
-    )
+
+    gen_dir = ctx.actions.declare_directory("%s" % (ctx.attr.name))
 
     commands = [
         "mkdir -p {gen_dir}".format(
-            gen_dir = gen_dir,
+            gen_dir = gen_dir.path,
         ),
-        _new_generator_command(ctx, gen_dir, rjars),
+        _new_generator_command(ctx, gen_dir.path, rjars),
         # forcing a timestamp for deterministic artifacts
         "find {gen_dir} -exec touch -t 198001010000 {{}} \;".format(
-            gen_dir = gen_dir,
+            gen_dir = gen_dir.path,
         ),
         "{jar} cMf {target} -C {srcs} .".format(
             jar = "%s/bin/jar" % ctx.attr._jdk[java_common.JavaRuntimeInfo].java_home,
             target = ctx.outputs.codegen.path,
-            srcs = gen_dir,
+            srcs = gen_dir.path,
         ),
     ]
 
@@ -139,7 +137,7 @@ def _impl(ctx):
     ] + cjars.to_list() + rjars.to_list()
     ctx.actions.run_shell(
         inputs = inputs,
-        outputs = [ctx.actions.declare_directory("%s" % (ctx.attr.name)), ctx.outputs.codegen],
+        outputs = [gen_dir, ctx.outputs.codegen],
         command = " && ".join(commands),
         progress_message = "generating openapi sources %s" % ctx.label,
         arguments = [],
