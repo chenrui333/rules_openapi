@@ -32,7 +32,6 @@ jobs:
           chmod +x install.sh
           ./install.sh --user
           rm -f install.sh
-          cat .bazelrc.ci >> .bazelrc
       env:
         V: "3.7.0"
     - name: Test
