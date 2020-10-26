@@ -7,8 +7,11 @@ test --ram_utilization_factor=10
 # Just making sure that we don't OOM with parallel builds
 build --local_ram_resources=2048 --local_cpu_resources=HOST_CPUS*.5
 
-# This is so we understand failures better
-build --verbose_failures
+#######################
+# Verbose failures #
+#######################
+build --color=yes --verbose_failures
+test --color=yes --verbose_failures --test_output=errors --test_verbose_timeout_warnings
 
 # This is so we use a recent enough GCC when building.
 # build --crosstool_top //tools/custom_crosstool:CROSSTOOL
