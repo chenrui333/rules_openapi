@@ -17,7 +17,7 @@ _SUPPORTED_PROVIDERS = {
     }
 }
 
-def openapi_repositories(codegen_cli_version = "2.4.9", codegen_cli_sha256 = "8555854798505f6ff924b55a95a7cc23d35b49aa9a62e8463b77da94b89b50b9", prefix = "io_bazel_rules_openapi", codegen_cli_provider = "swagger"):
+def openapi_repositories(codegen_cli_version = "2.4.16", codegen_cli_sha256 = "154b5a37254a3021a8cb669a1c57af78b45bb97e89e0425e3f055b1c79f74a93", prefix = "io_bazel_rules_openapi", codegen_cli_provider = "swagger"):
 
     jvm_maven_import_external(
         name = prefix + "_" + _SUPPORTED_PROVIDERS[codegen_cli_provider]["name"],
@@ -41,7 +41,7 @@ def _comma_separated_pairs(pairs):
 def _generator_provider(ctx):
     codegen_provider = "openapi"
     if "io_swagger_swagger_codegen_cli" in ctx.file.codegen_cli.path:
-        codegen_provider = "swagger" 
+        codegen_provider = "swagger"
     return codegen_provider
 
 def _is_swagger_codegen(ctx):
@@ -64,7 +64,7 @@ def _new_generator_command(ctx, gen_dir, rjars):
             language = ctx.attr.language,
             output = gen_dir,
         )
-    
+
     if _is_openapi_codegen(ctx):
         gen_cmd += " org.openapitools.codegen.OpenAPIGenerator generate -i {spec} -g {language} -o {output}".format(
             spec = ctx.file.spec.path,

@@ -42,8 +42,8 @@ test_build_is_identical() {
   diff hash1 hash2
 }
 
-CODEGEN_CLI_VERSION_DEFAULT="2.4.9"
-CODEGEN_CLI_SHA256_DEFAULT="8555854798505f6ff924b55a95a7cc23d35b49aa9a62e8463b77da94b89b50b9"
+CODEGEN_CLI_VERSION_DEFAULT="2.4.16"
+CODEGEN_CLI_SHA256_DEFAULT="154b5a37254a3021a8cb669a1c57af78b45bb97e89e0425e3f055b1c79f74a93"
 CODEGEN_CLI_PROVIDER_DEFAULT="swagger"
 test_version() {
   local CODEGEN_CLI_VERSION=${1:-$CODEGEN_CLI_VERSION_DEFAULT}
@@ -84,8 +84,8 @@ run_test bazel build test/...
 run_test test_build_is_identical
 
 run_test test_version \
-  "2.4.9" \
-  "8555854798505f6ff924b55a95a7cc23d35b49aa9a62e8463b77da94b89b50b9" \
+  "2.4.16" \
+  "154b5a37254a3021a8cb669a1c57af78b45bb97e89e0425e3f055b1c79f74a93" \
   "swagger"
 
 run_test test_version \
