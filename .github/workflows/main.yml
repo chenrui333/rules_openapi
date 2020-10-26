@@ -32,7 +32,7 @@ jobs:
           chmod +x install.sh
           ./install.sh --user
           rm -f install.sh
-          cat .bazelrc.travis >> .bazelrc
+          cat .bazelrc.ci >> .bazelrc
       env:
         V: "3.6.0"
     - name: Test
