@@ -20,8 +20,8 @@ To use the OpenAPI rules, add the following to your projects `WORKSPACE` file
 ```python
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-RULES_OPEN_API_VERSION = "4e35a7b968908213e3c6eedc4435d140dbb577b3"
-RULES_OPEN_API_SHA256 = "d1af6e9bd23b24a07f059b1a97f0bc305d7cf74a2965f06fc11c182d568a0e1c"
+RULES_OPEN_API_VERSION = "f0f42afb855139ad5346659d089c32fb756d068e"
+RULES_OPEN_API_SHA256 = "9570186948f1f65c61d2c6c6006840ea70888b270f028bbd0eb736caae1cd9df"
 
 http_archive(
     name = "io_bazel_rules_openapi",
@@ -50,6 +50,8 @@ load("@io_bazel_rules_openapi//openapi:openapi.bzl", "openapi_gen")
 | 2.1.1         | 4e35a7b968908213e3c6eedc4435d140dbb577b3 | d1af6e9bd23b24a07f059b1a97f0bc305d7cf74a2965f06fc11c182d568a0e1c |
 | 2.2.0         | 08e2472385e8929a21bf8cd747f26e3b933dbd2f | 9dfeeb8cef2347b5ba3d59b7948fd26518eefc537ca95d4846d6c124e38d294a |
 | 3.0.0         | 2528ecbfe628211de87e1924908350014fb0d03e | d4c5b924f0a2a7d844650ff3b76c0475f370e5ceb5b1811665144102e7296383 |
+| 3.6.0         | 112663e9935f4711c7c14c3357f8e4547d43cd8c | cf32217fda600e49848cd9b496a2e77e50d695230f437f8d5a2f0f2f5d437338 |
+| 3.7.0         | f0f42afb855139ad5346659d089c32fb756d068e | 9570186948f1f65c61d2c6c6006840ea70888b270f028bbd0eb736caae1cd9df |
 
 ## openapi_gen
 
