@@ -3,3 +3,17 @@
 #######################
 build --color=yes --verbose_failures
 test --color=yes --verbose_failures --test_output=errors --test_verbose_timeout_warnings
+
+#######################
+# Remote HTTP Caching #
+#######################
+build --remote_timeout=20
+build --remote_cache=http://localhost:8888
+build --remote_accept_cached=true
+build --remote_upload_local_results=true
+build --remote_local_fallback=true
+test --remote_timeout=20
+test --remote_cache=http://localhost:8888
+test --remote_accept_cached=true
+test --remote_upload_local_results=true
+test --remote_local_fallback=true
