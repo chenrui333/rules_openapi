@@ -7,6 +7,7 @@
 - [Rules](#rules)
 - [Getting started](#getting-started)
 - [Bazel compatibility matrix](#bazel-compatibility-matrix)
+- [OpenAPI generator](#openapi-generator)
 - [openapi_gen](#openapi_gen)
 
 ## Rules
@@ -52,6 +53,23 @@ load("@io_bazel_rules_openapi//openapi:openapi.bzl", "openapi_gen")
 | 3.0.0         | 2528ecbfe628211de87e1924908350014fb0d03e | d4c5b924f0a2a7d844650ff3b76c0475f370e5ceb5b1811665144102e7296383 |
 | 3.6.0         | 112663e9935f4711c7c14c3357f8e4547d43cd8c | cf32217fda600e49848cd9b496a2e77e50d695230f437f8d5a2f0f2f5d437338 |
 | 3.7.0         | f0f42afb855139ad5346659d089c32fb756d068e | 9570186948f1f65c61d2c6c6006840ea70888b270f028bbd0eb736caae1cd9df |
+
+## OpenAPI generator
+
+By default the code will be generated using [Swagger's codegen](https://github.com/swagger-api/swagger-codegen#swagger-code-generator) it is however possible to switch
+to [OpenAPI's generator](https://github.com/OpenAPITools/openapi-generator). This can be done by passing some parameters to the `openapi_repositories` function:
+
+WORKSPACE:
+```python
+load("@io_bazel_rules_openapi//openapi:openapi.bzl", "openapi_repositories")
+openapi_repositories(
+    codegen_cli_version = "5.0.0",
+    codegen_cli_sha256 = "839fade01e54ce1eecf012b8c33adb1413cff0cf2e76e23bc8d7673f09626f8e",
+    codegen_cli_provider = "openapi"
+)
+```
+
+For most languages, changing the generator should be seamless. You might however need to change the `language` field in you rule to match one available on the selected generator.
 
 ## openapi_gen
 

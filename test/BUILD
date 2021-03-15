@@ -39,3 +39,25 @@ openapi_gen(
         "Integer": "java.math.BigDecimal",
     },
 )
+
+openapi_gen(
+    name = "petstore_scala_openapi_5",
+    language = "scala-sttp",
+    spec = "petstore.yaml",
+    codegen_cli = "//external:io_bazel_rules_openapi_openapi_5/dependency/openapi-cli",
+    additional_properties = {
+        "jsonLibrary": "circe",
+        "sttpClientVersion": "2.2.0"
+    },
+)
+
+openapi_gen(
+    name = "petstore_scala_openapi_4",
+    language = "scala-sttp",
+    spec = "petstore.yaml",
+    codegen_cli = "//external:io_bazel_rules_openapi_openapi_4/dependency/openapi-cli",
+    additional_properties = {
+        "jsonLibrary": "circe",
+        "sttpClientVersion": "2.2.0"
+    },
+)
