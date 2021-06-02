@@ -123,7 +123,7 @@ def _impl(ctx):
         ),
         _new_generator_command(ctx, gen_dir, rjars),
         # forcing a timestamp for deterministic artifacts
-        "find {gen_dir} -exec touch -t 198001010000 {{}} \;".format(
+        "find {gen_dir} -exec touch -t 198001010000 {{}} \\;".format(
             gen_dir = gen_dir,
         ),
         "{jar} cMf {target} -C {srcs} .".format(
