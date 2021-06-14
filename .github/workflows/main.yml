@@ -15,25 +15,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
-    - name: Setup Bazel
-      run: |
-          if [[ "${{ matrix.os }}" == "macOS-latest" ]]; then
-            OS=darwin
-          else
-            sysctl kernel.unprivileged_userns_clone=1
-            sudo apt-get update -q
-            sudo apt-get install libxml2-utils -y
-            OS=linux
-          fi
-
-          URL="https://github.com/bazelbuild/bazel/releases/download/${V}/bazel-${V}-installer-${OS}-x86_64.sh"
-          wget -O install.sh "${URL}"
-          chmod +x install.sh
-          ./install.sh --user
-          rm -f install.sh
-      env:
-        V: "3.7.0"
+    - run: bazel --version
     - name: Test
-      run: |
-        export PATH=${PATH}:${HOME}/bin
-        make test
+      run: make test
