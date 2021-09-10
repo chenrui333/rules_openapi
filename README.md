@@ -20,13 +20,13 @@ To use the OpenAPI rules, add the following to your projects `WORKSPACE` file
 ```python
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-RULES_OPEN_API_VERSION = "f0f42afb855139ad5346659d089c32fb756d068e" # see compatibility matrix
+RULES_OPEN_API_COMMIT = "f0f42afb855139ad5346659d089c32fb756d068e" # see compatibility matrix
 RULES_OPEN_API_SHA256 = "9570186948f1f65c61d2c6c6006840ea70888b270f028bbd0eb736caae1cd9df" # see compatibility matrix
 
 http_archive(
     name = "io_bazel_rules_openapi",
-    strip_prefix = "rules_openapi-%s" % RULES_OPEN_API_VERSION,
-    url = "https://github.com/meetup/rules_openapi/archive/%s.tar.gz" % RULES_OPEN_API_VERSION,
+    strip_prefix = "rules_openapi-%s" % RULES_OPEN_API_COMMIT,
+    url = "https://github.com/meetup/rules_openapi/archive/%s.tar.gz" % RULES_OPEN_API_COMMIT,
     sha256 = RULES_OPEN_API_SHA256
 )
 
