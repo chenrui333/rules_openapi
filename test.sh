@@ -64,10 +64,10 @@ test_version() {
   cd $NEW_TEST_DIR
 
   bazel build //...
-  $(md5_util) bazel-bin/test/*.{srcjar,jar} > hash1
+  $(md5_util) bazel-bin/*.{srcjar,jar} > hash1
   bazel clean
   bazel build //...
-  $(md5_util) bazel-bin/test/*.{srcjar,jar} > hash2
+  $(md5_util) bazel-bin/*.{srcjar,jar} > hash2
   cat hash1 hash2
   diff hash1 hash2
 
@@ -102,3 +102,9 @@ run_test test_version \
   "4.3.1" \
   "f438cd16bc1db28d3363e314cefb59384f252361db9cb1a04a322e7eb5b331c1" \
   "openapi"
+
+run_test test_version \
+  "5.0.0" \
+  "839fade01e54ce1eecf012b8c33adb1413cff0cf2e76e23bc8d7673f09626f8e" \
+  "openapi"
+

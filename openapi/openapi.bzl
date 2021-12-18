@@ -50,6 +50,15 @@ def _is_swagger_codegen(ctx):
 def _is_openapi_codegen(ctx):
     return _generator_provider(ctx) == "openapi"
 
+def _openapi_major_version(ctx):
+    name = ctx.file.codegen_cli.path.split('/').pop(-1) # Extract JAR's name
+    # name should look like openapi-generator-cli-5.0.0.jar
+    # 1. Split on - and take the last part (5.0.0.jar) 
+    # 2. Remove the .jar and split on the '.'
+    # 3. Take the first element of the list (major)
+    version = name.split("-").pop(-1).replace(".jar", "").split(".").pop(0) # 
+    return int(version)
+
 def _new_generator_command(ctx, gen_dir, rjars):
     java_path = ctx.attr._jdk[java_common.JavaRuntimeInfo].java_executable_exec_path
     gen_cmd = str(java_path)
@@ -64,17 +73,24 @@ def _new_generator_command(ctx, gen_dir, rjars):
             language = ctx.attr.language,
             output = gen_dir,
         )
+        gen_cmd += ' -D "{properties}"'.format(
+            properties = _comma_separated_pairs(ctx.attr.system_properties),
+        )
 
     if _is_openapi_codegen(ctx):
-        gen_cmd += " org.openapitools.codegen.OpenAPIGenerator generate -i {spec} -g {language} -o {output}".format(
+        gen_cmd += " org.openapitools.codegen.OpenAPIGenerator generate --log-to-stderr -i {spec} -g {language} -o {output}".format(
             spec = ctx.file.spec.path,
             language = ctx.attr.language,
             output = gen_dir,
         )
-
-    gen_cmd += ' -D "{properties}"'.format(
-        properties = _comma_separated_pairs(ctx.attr.system_properties),
-    )
+        if _openapi_major_version(ctx) >= 5:
+            gen_cmd += ' --global-property "{properties}"'.format(
+                properties = _comma_separated_pairs(ctx.attr.system_properties),
+            )
+        else:
+            gen_cmd += ' -D "{properties}"'.format(
+                properties = _comma_separated_pairs(ctx.attr.system_properties),
+            )
 
     additional_properties = dict(ctx.attr.additional_properties)
 
