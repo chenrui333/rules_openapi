@@ -152,7 +152,7 @@ def _impl(ctx):
     inputs = ctx.files._jdk + [
         ctx.file.codegen_cli,
         ctx.file.spec,
-    ] + cjars.to_list() + rjars.to_list()
+    ] + _collect_files(ctx.attr.spec_refs) + cjars.to_list() + rjars.to_list()
     ctx.actions.run_shell(
         inputs = inputs,
         outputs = [ctx.actions.declare_directory("%s" % (ctx.attr.name)), ctx.outputs.codegen],
@@ -194,6 +194,12 @@ def _collect_jars(targets):
 
     return struct(compiletime = compile_jars, runtime = runtime_jars)
 
+def _collect_files(targets):
+    result = []
+    for target in targets:
+       result += target.files.to_list()
+    return result
+
 openapi_gen = rule(
     attrs = {
         # downstream dependencies
@@ -202,6 +208,11 @@ openapi_gen = rule(
         "spec": attr.label(
             mandatory = True,
             allow_single_file = [".json", ".yaml"],
+        ),
+        "spec_refs": attr.label_list(
+            allow_empty = True,
+            allow_files = [".json", ".yaml"],
+            default = [],
         ),
         # language to generate
         "language": attr.string(mandatory = True),
