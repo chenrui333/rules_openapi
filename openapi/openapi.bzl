@@ -57,7 +57,7 @@ def _openapi_major_version(ctx):
     # 2. Remove the .jar and split on the '.'
     # 3. Take the first element of the list (major)
     version = name.split("-").pop(-1).replace(".jar", "").split(".").pop(0) # 
-    return int(version)
+    return int(version) if version.isdigit() else None
 
 def _new_generator_command(ctx, gen_dir, rjars):
     java_path = ctx.attr._jdk[java_common.JavaRuntimeInfo].java_executable_exec_path
@@ -83,12 +83,13 @@ def _new_generator_command(ctx, gen_dir, rjars):
             language = ctx.attr.language,
             output = gen_dir,
         )
-        if _openapi_major_version(ctx) >= 5:
-            gen_cmd += ' --global-property "{properties}"'.format(
+        major_version = _openapi_major_version(ctx)
+        if major_version and major_version < 5:
+            gen_cmd += ' -D "{properties}"'.format(
                 properties = _comma_separated_pairs(ctx.attr.system_properties),
             )
         else:
-            gen_cmd += ' -D "{properties}"'.format(
+            gen_cmd += ' --global-property "{properties}"'.format(
                 properties = _comma_separated_pairs(ctx.attr.system_properties),
             )
 
