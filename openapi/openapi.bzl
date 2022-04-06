@@ -120,6 +120,11 @@ def _new_generator_command(ctx, gen_dir, rjars):
             package = ctx.attr.model_package,
         )
 
+    if ctx.file.template_dir:
+        gen_cmd += " --template-dir {template_dir}".format(
+            template_dir = ctx.file.template_dir.path,
+        )
+
     # fixme: by default, swagger-codegen is rather verbose. this helps with that but can also mask useful error messages
     # when it fails. look into log configuration options. it's a java app so perhaps just a log4j.properties or something
     gen_cmd += " 2>/dev/null"
@@ -152,6 +157,7 @@ def _impl(ctx):
     inputs = ctx.files._jdk + [
         ctx.file.codegen_cli,
         ctx.file.spec,
+        ctx.file.template_dir,
     ] + _collect_files(ctx.attr.spec_refs) + cjars.to_list() + rjars.to_list()
     ctx.actions.run_shell(
         inputs = inputs,
@@ -213,6 +219,10 @@ openapi_gen = rule(
             allow_empty = True,
             allow_files = [".json", ".yaml"],
             default = [],
+        ),
+        "template_dir": attr.label(
+            default = None,
+            allow_single_file = True,
         ),
         # language to generate
         "language": attr.string(mandatory = True),
