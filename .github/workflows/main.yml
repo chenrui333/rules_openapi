@@ -2,9 +2,13 @@ name: Main
 
 on:
   push:
+    branches:
+      - 'master'
     paths-ignore:
       - '*.md'
   pull_request:
+    branches:
+      - 'master'
     paths-ignore:
       - '*.md'
   workflow_dispatch:
@@ -14,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, macos-11 ]
+        os: [ ubuntu-22.04, ubuntu-latest, macos-12, macos-11 ]
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
