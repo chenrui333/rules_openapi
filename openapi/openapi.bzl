@@ -11,6 +11,10 @@ _SUPPORTED_PROVIDERS = {
         "artifact": "io.swagger:swagger-codegen-cli",
         "name": "io_swagger_swagger_codegen_cli"
     },
+    "swaggerv3": {
+        "artifact": "io.swagger.codegen.v3:swagger-codegen-cli",
+        "name": "io_swagger_codegen_v3_swagger_codegen_cli"
+    },
     "openapi": {
         "artifact": "org.openapitools:openapi-generator-cli",
         "name": "org_openapitools_openapi_generator_cli"
@@ -42,10 +46,15 @@ def _generator_provider(ctx):
     codegen_provider = "openapi"
     if "io_swagger_swagger_codegen_cli" in ctx.file.codegen_cli.path:
         codegen_provider = "swagger"
+    if "io_swagger_codegen_v3_swagger_codegen_cli" in ctx.file.codegen_cli.path:
+        codegen_provider = "swaggerv3"
     return codegen_provider
 
 def _is_swagger_codegen(ctx):
     return _generator_provider(ctx) == "swagger"
+
+def _is_swagger_codegen_v3(ctx):
+    return _generator_provider(ctx) == "swaggerv3"
 
 def _is_openapi_codegen(ctx):
     return _generator_provider(ctx) == "openapi"
@@ -69,6 +78,16 @@ def _new_generator_command(ctx, gen_dir, rjars):
 
     if _is_swagger_codegen(ctx):
         gen_cmd += " io.swagger.codegen.SwaggerCodegen generate -i {spec} -l {language} -o {output}".format(
+            spec = ctx.file.spec.path,
+            language = ctx.attr.language,
+            output = gen_dir,
+        )
+        gen_cmd += ' -D "{properties}"'.format(
+            properties = _comma_separated_pairs(ctx.attr.system_properties),
+        )
+
+    if _is_swagger_codegen_v3(ctx):
+        gen_cmd += " io.swagger.codegen.v3.cli.SwaggerCodegen generate -i {spec} -l {language} -o {output}".format(
             spec = ctx.file.spec.path,
             language = ctx.attr.language,
             output = gen_dir,
