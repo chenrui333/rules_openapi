@@ -17,3 +17,10 @@ openapi_repositories(
     prefix = "io_bazel_rules_openapi_openapi_5",
     codegen_cli_provider = "openapi"
 )
+
+openapi_repositories(
+    codegen_cli_provider = "swaggerv3",
+    codegen_cli_sha256 = "5480e649661f132bdc547cd4ec3a7f334b9f57a33ee9b3e857af9c7b5f5be6c2",
+    codegen_cli_version = "3.0.43",
+    prefix = "io_bazel_rules_openapi_swagger_3_0_43",
+)

@@ -108,3 +108,7 @@ run_test test_version \
   "839fade01e54ce1eecf012b8c33adb1413cff0cf2e76e23bc8d7673f09626f8e" \
   "openapi"
 
+run_test test_version \
+  "3.0.43" \
+  "5480e649661f132bdc547cd4ec3a7f334b9f57a33ee9b3e857af9c7b5f5be6c2" \
+  "swaggerv3"

@@ -61,3 +61,10 @@ openapi_gen(
         "sttpClientVersion": "2.2.0"
     },
 )
+
+openapi_gen(
+    name = "petstore_java_swagger3",
+    language = "java",
+    spec = "petstore.yaml",
+    codegen_cli = "//external:io_bazel_rules_openapi_swagger_3_0_43/dependency/openapi-cli",
+)
