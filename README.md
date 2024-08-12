@@ -6,7 +6,6 @@
 
 - [Rules](#rules)
 - [Getting started](#getting-started)
-- [Bazel compatibility matrix](#bazel-compatibility-matrix)
 - [OpenAPI generator](#openapi-generator)
 - [openapi_gen](#openapi_gen)
 
@@ -40,24 +39,6 @@ Then in your `BUILD` file, just add the following so the rules will be available
 ```python
 load("@io_bazel_rules_openapi//openapi:openapi.bzl", "openapi_gen")
 ```
-
-## Bazel compatibility matrix
-
-| Bazel version | rules_openapi commit                     | sha256 hash                                                      |
-| ------------- | ---------------------------------------- | ---------------------------------------------------------------- |
-| 1.2.1         | 32527fd4f9b4a50199b3905d34027b1eaf61b88a | 700feae8dda1a6400672c77e0b2bc2d5db9a21b902c20b342d65bb314af953f3 |
-| 2.0.0         | c6e77e314df7ced9652bc68f3ee32d5425160716 | ba55fbd75a50eb8e2fd08d4dc72a8f32858bc14db184677cee969453d72d7c67 |
-| 2.1.0         | c289e0b4e127924e2a18bc8f345b6cf1945735de | f88a6627533d2974385b36ce1f3606795cd08070e28e5e44074ed2101afdd348 |
-| 2.1.1         | 4e35a7b968908213e3c6eedc4435d140dbb577b3 | d1af6e9bd23b24a07f059b1a97f0bc305d7cf74a2965f06fc11c182d568a0e1c |
-| 2.2.0         | 08e2472385e8929a21bf8cd747f26e3b933dbd2f | 9dfeeb8cef2347b5ba3d59b7948fd26518eefc537ca95d4846d6c124e38d294a |
-| 3.0.0         | 2528ecbfe628211de87e1924908350014fb0d03e | d4c5b924f0a2a7d844650ff3b76c0475f370e5ceb5b1811665144102e7296383 |
-| 3.6.0         | 112663e9935f4711c7c14c3357f8e4547d43cd8c | cf32217fda600e49848cd9b496a2e77e50d695230f437f8d5a2f0f2f5d437338 |
-| 3.7.0         | f0f42afb855139ad5346659d089c32fb756d068e | 9570186948f1f65c61d2c6c6006840ea70888b270f028bbd0eb736caae1cd9df |
-| 3.7.1         | 896323d32a19078e83a70513077554a6529b18b7 | dca86aea8e76ae891bedf42dbb91a7d4b573efc7142cb6049d6b061768c43701 |
-| 4.0.0         | d39cf5731254bbf6ef973228bb6f5f4050aa7e60 | 264808b5fa537806fe78ac67a41cb6e0b14e63e67981b3058c5a6758675e7e4f |
-| 4.1.0         | 89882964f041a9d11bdc48299defdd500e3e1995 | 89ab3a0c8190d5c88c3bd19d16585153b4ce5aba3a47cdefdc5eee63f4bd813a |
-| 4.2.1         | 8b33d29996d539937e11f7da22f85047fab01197 | e76d5e3a807a5eae6d7059393759869336a5f649906b64c488e1ada89675908a |
-| 5.0.0         | f48152c4a204b1b9c59d726579ce416aa5d08732 | 1d6bdad4608e99708cc7818ffdca9d5ae4c74857d002f19330ae8a028868f258 |
 
 ## OpenAPI generator
 
